@@ -10,7 +10,7 @@ export const createSubscription = async (req, res, next) => {
     });
 
     await workflowClient.trigger({
-      url: `${SERVER_URL}`
+      url: `${SERVER_URL}/api/v1/workflows/subscriptiion/reminder`,
     })
 
     res.status(201).json({ success: true, data: subscription });
