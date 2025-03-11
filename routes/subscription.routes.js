@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createSubscription } from '../controllers/subscription.controller.js';
+import { createSubscription, getUserSubscriptions } from '../controllers/subscription.controller.js';
 import authorize from '../middlewares/auth.middleware.js';
 
 const subscriptionRouter = Router();
@@ -14,7 +14,7 @@ subscriptionRouter.put('/:id', (req, res) => res.send('UPDATE subscription'));
 
 subscriptionRouter.delete('/:id', (req, res) => res.send('DELETE subscription'));
 
-subscriptionRouter.get('/user/:id', (req, res) => res.send('GET all user subscriptions'));
+subscriptionRouter.get('/user/:id', authorize, getUserSubscriptions);
 
 subscriptionRouter.put('/:id/cancel', (req, res) => res.send('CANCEL subscription'));
 
