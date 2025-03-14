@@ -72,3 +72,17 @@ export const getAllSubscriptions = async (req, res, next) => {
     next(e);
   }
 };
+
+
+export const getUpcomingRenewals = async (req, res, next) => {
+  try {
+    const now = new Date();
+    const upcomingSubscriptions = await Subscription.find({
+      renewalDate: { $gte: now },
+    });
+
+    res.status(200).json({ success: true, data: upcomingSubscriptions });
+  } catch (e) {
+    next(e);
+  }
+};
