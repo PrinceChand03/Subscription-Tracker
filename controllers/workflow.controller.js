@@ -1,5 +1,5 @@
-import { createRequire } from 'module'
 import dayjs from 'dayjs';
+import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
 const { serve } = require('@upstash/workflow/express')
@@ -30,11 +30,10 @@ export const sendReminders = serve(async (context) => {
       await sleepUntilReminder(context, `${daysBefore} days before reminder`, reminderDate);
     }
 
-    if (dayjs.isSame(reminderDate, 'day')) {
+    if (dayjs().isSame(reminderDate, 'day')) {
       await triggerReminder(context, `${daysBefore} days before reminder`, subscription);
     }
 
-    //2 days before reminder
     await triggerReminder(context, `${daysBefore} days before reminder`, subscription);
   }
 });
@@ -47,7 +46,7 @@ const fetchSubscription = async (context, subscriptionId) => {
 }
 
 
-const sleepUntilReminder = async (context, MongoErrorLabel, date) => {
+const sleepUntilReminder = async (context, label, date) => {
   console.log(`Sleeping until ${label} reminder at ${date}`);
   await context.sleepUntil(label, date.toDate());
 }
