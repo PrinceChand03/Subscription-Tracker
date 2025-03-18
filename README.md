@@ -139,4 +139,4 @@ Open [http://localhost:5500](http://localhost:5500) in your browser or any HTTP 
 
 - **Arcjet** - [https://launch.arcjet.com/4g2R2e4](https://launch.arcjet.com/4g2R2e4)  
 - **Upstash** - [https://bit.ly/42ealiN](https://bit.ly/42ealiN)  
-- **Nodemailer** - [https://www.nodemailer.com/] (https://www.nodemailer.com/)
+- **Nodemailer** - [https://www.nodemailer.com/](https://www.nodemailer.com/)
