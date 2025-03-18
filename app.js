@@ -1,5 +1,5 @@
 import express from 'express';
-
+import cors from 'cors';
 
 import { PORT } from './config/env.js';
 
@@ -13,6 +13,8 @@ import arcjetMiddleware from './middlewares/arcjet.middleware.js';
 import workflowRouter from './routes/workflow.routes.js';
 
 const app = express();
+
+app.use(cors({ origin: process.env.HOST, credentials: true }));
 
 // handle json data in API calls
 app.use(express.json());
