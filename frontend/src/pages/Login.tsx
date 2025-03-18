@@ -13,6 +13,7 @@ const Login = () => {
     try {
       const response = await axios.post("http://localhost:5500/api/v1/auth/sign-in", { email, password });
       localStorage.setItem("token", response.data.data.token);
+      localStorage.setItem("userId", response.data.data.user._id);
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed", error);
