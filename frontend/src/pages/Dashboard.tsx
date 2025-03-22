@@ -44,22 +44,22 @@ const Dashboard = () => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Your Subscriptions</h1>
-      <table className="table-auto w-full border-collapse border border-gray-200">
+    <div className="container mt-5">
+      <h1 className="mb-4">Your Subscriptions</h1>
+      <table className="table table-striped">
         <thead>
-          <tr className="bg-gray-100">
-            <th className="border p-2">Name</th>
-            <th className="border p-2">Price</th>
-            <th className="border p-2">Renewal Date</th>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Renewal Date</th>
           </tr>
         </thead>
         <tbody>
-          {subscriptions.map(sub => (
-            <tr key={sub._id} className="border">
-              <td className="border p-2">{sub.name}</td>
-              <td className="border p-2">${sub.price.toFixed(2)}</td>
-              <td className="border p-2">{new Date(sub.renewalDate).toLocaleDateString()}</td>
+          {subscriptions.map((sub) => (
+            <tr key={sub._id}>
+              <td>{sub.name}</td>
+              <td>${sub.price.toFixed(2)}</td>
+              <td>{new Date(sub.renewalDate).toLocaleDateString()}</td>
             </tr>
           ))}
         </tbody>

@@ -4,9 +4,11 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import React from "react";
 import Dashboard from "./pages/Dashboard";
+import Navbar from "./pages/Navbar";
 
 const AppRoutes = () => (
   <Router>
+    <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
