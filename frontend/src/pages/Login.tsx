@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }: { setIsAuthenticated: (auth: boolean) => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ const Login = () => {
       const response = await axios.post("http://localhost:5500/api/v1/auth/sign-in", { email, password });
       localStorage.setItem("token", response.data.data.token);
       localStorage.setItem("userId", response.data.data.user._id);
+      setIsAuthenticated(true);
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed", error);

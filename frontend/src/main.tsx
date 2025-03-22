@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import AppRoutes from "./routes";
+import AppRoutes from "./App";
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
