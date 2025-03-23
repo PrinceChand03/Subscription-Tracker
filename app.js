@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+const path = require('path');
 
 import { PORT } from './config/env.js';
 
@@ -27,6 +28,9 @@ app.use(cookieParser());
 
 // Arcjet middleware to protect the API
 app.use(arcjetMiddleware);
+
+// Serve static files from the 'dist' folder
+// app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/auth', authRouter);
