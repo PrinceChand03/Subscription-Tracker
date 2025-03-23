@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [editingSub, setEditingSub] = useState<Subscription | null>(null);
   const [newSub, setNewSub] = useState({
     name: "",
     price: "",
@@ -62,11 +63,12 @@ const Dashboard = () => {
 
   if (loading) return <LoadingSpinner />;
 
-
+  // gestione input form
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setNewSub({ ...newSub, [e.target.name]: e.target.value });
   };
 
+  // aggiunta nuova sottoscrizione
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -98,6 +100,55 @@ const Dashboard = () => {
     }
   };
 
+
+  // Eliminazione sottoscrizione
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Sei sicuro di voler eliminare questa sottoscrizione?")) return;
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:5500/api/v1/subscriptions/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setSubscriptions(subscriptions.filter(sub => sub._id !== id));
+    } catch (error) {
+      console.error("Errore nell'eliminazione della sottoscrizione:", error);
+    }
+  };
+
+
+  // Apertura del modal di modifica
+  const handleEdit = (subscription: Subscription) => {
+    setEditingSub(subscription);
+    setShowModal(true);
+  };
+
+
+  // Modifica della sottoscrizione
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingSub) return;
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.put(
+        `http://localhost:5500/api/v1/subscriptions/${editingSub._id}`,
+        editingSub,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.status === 200) {
+        setSubscriptions(subscriptions.map(sub =>
+          sub._id === editingSub._id ? response.data.data : sub
+        ));
+        setShowModal(false);
+        setEditingSub(null);
+      }
+    } catch (error) {
+      console.error("Errore nell'aggiornamento della sottoscrizione:", error);
+    }
+  };
+
   return (
     <div className="container mt-5">
       <h1 className="mb-4">Your Subscriptions</h1>
@@ -106,7 +157,7 @@ const Dashboard = () => {
       </Button>
 
 
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={() => { setShowModal(false); setEditingSub(null) }}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Subscription</Modal.Title>
         </Modal.Header>
@@ -221,10 +272,52 @@ const Dashboard = () => {
               <td>{sub.category}</td>
               <td>{sub.paymentMethod}</td>
               <td>{new Date(sub.renewalDate).toLocaleDateString()}</td>
+              <td>
+                <Button variant="warning" className="btn-sm me-2" onClick={() => handleEdit(sub)}>✏️</Button>
+                <Button variant="danger" className="btn-sm" onClick={() => handleDelete(sub._id)}>🗑️</Button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Modal per Aggiunta/Modifica */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{editingSub ? "Edit Subscription" : "Add Subscription"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={editingSub ? handleUpdate : handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={editingSub ? editingSub.name : newSub.name}
+                onChange={(e) => editingSub
+                  ? setEditingSub({ ...editingSub, name: e.target.value })
+                  : handleInputChange(e)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="number"
+                name="price"
+                value={editingSub ? editingSub.price : newSub.price}
+                onChange={(e) => editingSub
+                  ? setEditingSub({ ...editingSub, price: Number(e.target.value) })
+                  : handleInputChange(e)}
+                required
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              {editingSub ? "Update Subscription" : "Add Subscription"}
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
