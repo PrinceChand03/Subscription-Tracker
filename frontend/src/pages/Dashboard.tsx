@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 interface Subscription {
   _id: string;
@@ -59,7 +60,8 @@ const Dashboard = () => {
     fetchSubscriptions();
   }, [navigate]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setNewSub({ ...newSub, [e.target.name]: e.target.value });
@@ -213,7 +215,7 @@ const Dashboard = () => {
           {subscriptions.map((sub) => (
             <tr key={sub._id}>
               <td>{sub.name}</td>
-              <td>${sub.price.toFixed(2)}</td>
+              <td>{sub.price}</td>
               <td>{sub.currency}</td>
               <td>{sub.frequency}</td>
               <td>{sub.category}</td>
