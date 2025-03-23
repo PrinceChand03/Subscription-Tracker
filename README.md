@@ -128,12 +128,12 @@ Open [http://localhost:5500](http://localhost:5500) in your browser or any HTTP 
 
 ```json
 {
-  "name": "Javascript Mastery Elite Membership",
+  "name": "Netflix",
   "price": 139.00,
   "currency": "USD",
   "frequency": "monthly",
   "category": "Entertainment",
-  "startDate": "2025-01-20T00:00:00.000Z",
+  "startDate": "2025-01-20",
   "paymentMethod": "Credit Card"
 }
 
