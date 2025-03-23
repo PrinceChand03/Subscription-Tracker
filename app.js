@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-const path = require('path');
+// const path = require('path');
 
 import { PORT } from './config/env.js';
 
