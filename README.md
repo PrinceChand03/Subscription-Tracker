@@ -108,9 +108,14 @@ EMAIL_PASSWORD=
 ```
 
 **Running the Project**
-
+on the frontend:
 ```bash
 npm run dev
+```
+on the backend:
+```bash
+npm run dev
+npx @upstash/qstash-cli dev
 ```
 
 Open [http://localhost:5500](http://localhost:5500) in your browser or any HTTP client to test the project.
