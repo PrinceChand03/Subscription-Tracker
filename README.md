@@ -108,6 +108,7 @@ EMAIL_PASSWORD=
 ```
 
 **Running the Project**
+
 on the frontend:
 ```bash
 npm run dev
