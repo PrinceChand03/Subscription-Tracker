@@ -222,7 +222,6 @@ const Dashboard = () => {
               >
                 <option value="EUR">EUR</option>
                 <option value="USD">USD</option>
-                <option value="GBP">GBP</option>
               </Form.Control>
             </Form.Group>
 
@@ -234,10 +233,10 @@ const Dashboard = () => {
                 value={newSub.frequency}
                 onChange={handleInputChange}
               >
-                <option value="daily">Giornaliera</option>
-                <option value="weekly">Settimanale</option>
-                <option value="monthly">Mensile</option>
-                <option value="yearly">Annua</option>
+                <option value="giornaliera">Giornaliera</option>
+                <option value="settimanale">Settimanale</option>
+                <option value="mensile">Mensile</option>
+                <option value="annua">Annua</option>
               </Form.Control>
             </Form.Group>
 
@@ -313,7 +312,7 @@ const Dashboard = () => {
           {subscriptions.map((sub) => (
             <tr key={sub._id}>
               <td>{sub.name}</td>
-              <td>{sub.price}</td>
+              <td>{sub.currency === "USD" ? `$${sub.price}` : sub.currency === "EUR" ? `€${sub.price}` : sub.price}</td>
               <td>{sub.currency}</td>
               <td>{sub.frequency}</td>
               <td>{sub.category}</td>
@@ -336,32 +335,48 @@ const Dashboard = () => {
       {/* Modal per Modifica */}
       <Modal show={showEditModal} onHide={handleCloseEditModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Subscription</Modal.Title>
+          <Modal.Title>Modifica sottoscrizione</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {editingSub && (
             <Form onSubmit={handleEditSubmit}>
               <Form.Group>
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Nome</Form.Label>
                 <Form.Control type="text" name="name" value={editingSub.name} onChange={handleEditInputChange} required />
               </Form.Group>
 
               <Form.Group>
-                <Form.Label>Price</Form.Label>
+                <Form.Label>Prezzo</Form.Label>
                 <Form.Control type="number" name="price" value={editingSub.price} onChange={handleEditInputChange} required />
               </Form.Group>
 
               <Form.Group>
-                <Form.Label>Category</Form.Label>
-                <Form.Control type="text" name="category" value={editingSub.category} onChange={handleEditInputChange} required />
+                <Form.Label>Categoria</Form.Label>
+                <Form.Control as="select" name="category" value={editingSub.category} onChange={handleEditInputChange} required >
+                  <option value="sport">Sport</option>
+                  <option value="intrattenimento">Intrattenimento</option>
+                  <option value="musica">Musica</option>
+                  <option value="tecnologia">Tecnologia</option>
+                  <option value="notizie">Notizie</option>
+                  <option value="altro">Altro</option>
+                  <option value="finanza">Finanza</option>
+                  <option value="lifestyle">Lifestyle</option>
+                  <option value="bambini">Bambini</option>
+                </Form.Control>
               </Form.Group>
 
               <Form.Group>
-                <Form.Label>Payment Method</Form.Label>
-                <Form.Control type="text" name="paymentMethod" value={editingSub.paymentMethod} onChange={handleEditInputChange} required />
+                <Form.Label>Metodo di pagamento</Form.Label>
+                <Form.Control as="select" name="paymentMethod" value={editingSub.paymentMethod} onChange={handleEditInputChange} required >
+                  <option value="paypal">PayPal</option>
+                  <option value="mastercard">Mastercard</option>
+                  <option value="bonifico">Bonifico</option>
+                  <option value="contanti">Contanti</option>
+                  <option value="altro">Altro</option>
+                </Form.Control>
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="mt-3">Save Changes</Button>
+              <Button variant="primary" type="submit" className="mt-3">Salva modifiche</Button>
             </Form>
           )}
         </Modal.Body>

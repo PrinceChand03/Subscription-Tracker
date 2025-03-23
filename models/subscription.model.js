@@ -15,12 +15,12 @@ const subscriptionSchema = new mongoose.Schema({
   },
   currency: {
     type: String,
-    enum: ['USD', 'EUR', 'GBP'],
+    enum: ['USD', 'EUR'],
     default: 'EUR',
   },
   frequency: {
     type: String,
-    enum: ['daily', 'weekly', 'monthly', 'yearly'],
+    enum: ['giornaliera', 'settimanale', 'mensile', 'annua'],
     // default: 'monthly',
   },
   category: {
