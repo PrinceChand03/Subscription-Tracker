@@ -25,13 +25,13 @@ const subscriptionSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['sports', 'entertainment', 'technology', 'finance', 'other', 'movies', 'music', 'news', 'lifestyle', 'kids'],
+    enum: ['sport', 'intrattenimento', 'tecnologia', 'finanza', 'altro', 'film', 'musica', 'notizie', 'lifestyle', 'bambini'],
     required: true,
   },
   paymentMethod: {
     type: String,
-    required: [true, 'Payment Method is required'],
-    trim: true,
+    enum: ['paypal', 'mastercard', 'bonifico', 'contanti', 'altro'],
+    required: true,
   },
   status: {
     type: String,

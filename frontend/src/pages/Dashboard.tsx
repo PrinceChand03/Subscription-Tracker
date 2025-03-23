@@ -34,11 +34,11 @@ const Dashboard = () => {
   const [newSub, setNewSub] = useState({
     name: "",
     price: "",
-    currency: "USD",
+    currency: "EUR",
     frequency: "monthly",
-    category: "",
+    category: "sport",
     startDate: "",
-    paymentMethod: "",
+    paymentMethod: "paypal",
   });
 
   const navigate = useNavigate();
@@ -68,6 +68,7 @@ const Dashboard = () => {
 
     fetchSubscriptions();
   }, [navigate]);
+
 
   if (loading) return <LoadingSpinner />;
 
@@ -140,11 +141,11 @@ const Dashboard = () => {
         setNewSub({
           name: "",
           price: "",
-          currency: "USD",
+          currency: "EUR",
           frequency: "monthly",
-          category: "",
+          category: "sport",
           startDate: "",
-          paymentMethod: "",
+          paymentMethod: "paypal",
         });
 
         // Ricarica la pagina
@@ -174,79 +175,95 @@ const Dashboard = () => {
 
   return (
     <div className="container mt-5">
-      <h1 className="mb-4">Your Subscriptions</h1>
+      <h1 className="mb-4">Le tue sottoscrizioni</h1>
       <Button className="btn btn-primary mb-3" onClick={() => setShowAddModal(true)}>
-        Add Subscription
+        Aggiungi sottoscrizione
       </Button>
 
       {/* Modal per Aggiunta */}
       <Modal show={showAddModal} onHide={() => { setShowAddModal(false) }}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Subscription</Modal.Title>
+          <Modal.Title>Nuova sottoscrizione</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
+
             <Form.Group controlId="formName">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Nome</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder="Nome"
                 value={newSub.name}
                 onChange={handleInputChange}
                 required
               />
             </Form.Group>
+
             <Form.Group controlId="formPrice">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>Prezzo</Form.Label>
               <Form.Control
                 type="number"
                 name="price"
-                placeholder="Price"
+                placeholder="Prezzo"
                 value={newSub.price}
                 onChange={handleInputChange}
                 required
               />
             </Form.Group>
+
             <Form.Group controlId="formCurrency">
-              <Form.Label>Currency</Form.Label>
+              <Form.Label>Valuta</Form.Label>
               <Form.Control
                 as="select"
                 name="currency"
                 value={newSub.currency}
                 onChange={handleInputChange}
               >
-                <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
               </Form.Control>
             </Form.Group>
+
             <Form.Group controlId="formFrequency">
-              <Form.Label>Frequency</Form.Label>
+              <Form.Label>Frequenza</Form.Label>
               <Form.Control
                 as="select"
                 name="frequency"
                 value={newSub.frequency}
                 onChange={handleInputChange}
               >
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
+                <option value="daily">Giornaliera</option>
+                <option value="weekly">Settimanale</option>
+                <option value="monthly">Mensile</option>
+                <option value="yearly">Annua</option>
               </Form.Control>
             </Form.Group>
+
             <Form.Group controlId="formCategory">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>Categoria</Form.Label>
               <Form.Control
-                type="text"
+                as="select"
                 name="category"
-                placeholder="Category"
                 value={newSub.category}
                 onChange={handleInputChange}
                 required
-              />
+              >
+                <option value="sport">Sport</option>
+                <option value="intrattenimento">Intrattenimento</option>
+                <option value="musica">Musica</option>
+                <option value="tecnologia">Tecnologia</option>
+                <option value="notizie">Notizie</option>
+                <option value="altro">Altro</option>
+                <option value="finanza">Finanza</option>
+                <option value="lifestyle">Lifestyle</option>
+                <option value="bambini">Bambini</option>
+              </Form.Control>
             </Form.Group>
+
             <Form.Group controlId="formStartDate">
-              <Form.Label>Start Date</Form.Label>
+              <Form.Label>Data inizio</Form.Label>
               <Form.Control
                 type="date"
                 name="startDate"
@@ -255,19 +272,26 @@ const Dashboard = () => {
                 required
               />
             </Form.Group>
+
             <Form.Group controlId="formPaymentMethod">
-              <Form.Label>Payment Method</Form.Label>
+              <Form.Label>Metodo di pagamento</Form.Label>
               <Form.Control
-                type="text"
+                as="select"
                 name="paymentMethod"
-                placeholder="Payment Method"
                 value={newSub.paymentMethod}
                 onChange={handleInputChange}
                 required
-              />
+              >
+                <option value="paypal">PayPal</option>
+                <option value="mastercard">Mastercard</option>
+                <option value="bonifico">Bonifico</option>
+                <option value="contanti">Contanti</option>
+                <option value="altro">Altro</option>
+              </Form.Control>
             </Form.Group>
+
             <Button variant="success" type="submit" className="mt-3">
-              Add
+              Aggiungi
             </Button>
           </Form>
         </Modal.Body>
@@ -276,13 +300,13 @@ const Dashboard = () => {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Currency</th>
-            <th>Frequency</th>
-            <th>Category</th>
-            <th>Payment Method</th>
-            <th>Renewal Date</th>
+            <th>Nome</th>
+            <th>Prezzo</th>
+            <th>Valuta</th>
+            <th>Frequenza</th>
+            <th>Categoria</th>
+            <th>Metodo pagamento</th>
+            <th>Rinnovo</th>
           </tr>
         </thead>
         <tbody>
