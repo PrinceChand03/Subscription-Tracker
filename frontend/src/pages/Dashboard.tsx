@@ -71,6 +71,7 @@ const Dashboard = () => {
 
   if (loading) return <LoadingSpinner />;
 
+
   // gestione input form
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setNewSub({ ...newSub, [e.target.name]: e.target.value });
@@ -145,6 +146,9 @@ const Dashboard = () => {
           startDate: "",
           paymentMethod: "",
         });
+
+        // Ricarica la pagina
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error adding subscription:", error);
@@ -290,7 +294,12 @@ const Dashboard = () => {
               <td>{sub.frequency}</td>
               <td>{sub.category}</td>
               <td>{sub.paymentMethod}</td>
-              <td>{new Date(sub.renewalDate).toLocaleDateString()}</td>
+              <td>
+                {sub.renewalDate && !isNaN(new Date(sub.renewalDate).getTime())
+                  ? new Date(sub.renewalDate).toLocaleDateString()
+                  : "N/A"}
+              </td>
+
               <td>
                 <Button variant="warning" className="btn-sm me-2" onClick={() => handleEditClick(sub)}>✏️</Button>
                 <Button variant="danger" className="btn-sm" onClick={() => handleDelete(sub._id)}>🗑️</Button>
