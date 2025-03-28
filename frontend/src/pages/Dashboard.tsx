@@ -30,6 +30,11 @@ const Dashboard = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingSub, setEditingSub] = useState<Subscription | null>(null);
 
+  //stato per il modale elimina
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [subscriptionToDelete, setSubscriptionToDelete] = useState<string | null>(null);
+
+
 
   const [newSub, setNewSub] = useState({
     name: "",
@@ -90,6 +95,18 @@ const Dashboard = () => {
     setShowEditModal(false);
     setEditingSub(null);
   };
+
+
+  const handleShowDeleteModal = (id: string) => {
+    setSubscriptionToDelete(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setSubscriptionToDelete(null);
+    setShowDeleteModal(false);
+  };
+
 
 
   // Gestisce l'input per la modifica
@@ -158,19 +175,23 @@ const Dashboard = () => {
 
 
   // Eliminazione sottoscrizione
-  const handleDelete = async (id: string) => {
-    if (!window.confirm("Sei sicuro di voler eliminare questa sottoscrizione?")) return;
+  const handleDelete = async () => {
+    if (!subscriptionToDelete) return;
+
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5500/api/v1/subscriptions/${id}`, {
+      await axios.delete(`http://localhost:5500/api/v1/subscriptions/${subscriptionToDelete}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      setSubscriptions(subscriptions.filter(sub => sub._id !== id));
+      setSubscriptions(subscriptions.filter(sub => sub._id !== subscriptionToDelete));
     } catch (error) {
       console.error("Errore nell'eliminazione della sottoscrizione:", error);
+    } finally {
+      handleCloseDeleteModal(); // Chiude il modale dopo l'operazione
     }
   };
+
 
 
   return (
@@ -325,7 +346,7 @@ const Dashboard = () => {
 
               <td>
                 <Button variant="warning" className="btn-sm me-2" onClick={() => handleEditClick(sub)}>✏️</Button>
-                <Button variant="danger" className="btn-sm" onClick={() => handleDelete(sub._id)}>🗑️</Button>
+                <Button variant="danger" className="btn-sm" onClick={() => handleShowDeleteModal(sub._id)}>🗑️</Button>
               </td>
             </tr>
           ))}
@@ -381,6 +402,25 @@ const Dashboard = () => {
           )}
         </Modal.Body>
       </Modal>
+
+      {/* Modale per Elimina */}
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Conferma Eliminazione</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Sei sicuro di voler eliminare questa sottoscrizione? L'azione è irreversibile.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDeleteModal}>
+            Annulla
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Elimina
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </div>
   );
 };

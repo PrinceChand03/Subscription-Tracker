@@ -37,7 +37,7 @@ const Navbar = ({ isAuthenticated, setIsAuthenticated }: { isAuthenticated: bool
                   <Link className="nav-link" to="/dashboard">Dashboard</Link>
                 </li>
                 <li className="nav-item">
-                  <button className="btn btn-danger" onClick={handleLogout}>Sign Out</button>
+                  <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
                 </li>
               </>
             )}

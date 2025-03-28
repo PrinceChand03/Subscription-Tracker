@@ -16,7 +16,7 @@ const Home = () => {
         ) : (
           <>
             <Link to="/login" className="btn btn-primary mx-2">Login</Link>
-            <Link to="/register" className="btn btn-outline-secondary mx-2">Registrati</Link>
+            <Link to="/register" className="btn btn-outline-secondary mx-2">Register</Link>
           </>
         )}
       </div>
