@@ -41,7 +41,7 @@ A simple and effective web application to help users manage their recurring subs
 
 📦 subscription-tracker
 
-<pre lang="markdown"><code>``` 📦 subscription-tracker ├── backend │ ├── controllers/ │ ├── models/ │ ├── routes/ │ └── server.js ├── frontend │ └── src/ │ ├── pages/ │ ├── components/ │ └── API/ ├── .env └── README.md ```</code></pre>
+<pre><code>``` 📦 subscription-tracker ├── backend │ ├── controllers/ │ ├── models/ │ ├── routes/ │ └── server.js ├── frontend │ └── src/ │ ├── pages/ │ ├── components/ │ └── API/ ├── .env └── README.md ```</code></pre>
 
 
 
