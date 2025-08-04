@@ -40,6 +40,7 @@ A simple and effective web application to help users manage their recurring subs
 ## 📁 Project Structure
 
 📦 subscription-tracker
+
 ├── backend
 │ ├── controllers/
 │ ├── models/
