@@ -54,15 +54,7 @@ A simple and effective web application to help users manage their recurring subs
 └── README.md
 
 
----
 
-## 📸 Screenshots
-
-![Dashboard](./screenshots/dashboard.png)  
-![Add Subscription](./screenshots/add-subscription.png)  
-![Login](./screenshots/login.png)
-
-> *Replace these with your actual screenshots*
 
 ---
 
